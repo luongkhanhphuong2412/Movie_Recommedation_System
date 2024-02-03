@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
+base_url = "https://www.imdb.com/list/ls048276758/"
 
-base_url = ["https://www.imdb.com/list/ls006266261/"]
+for page in range(1, 11):
+    url = f"{base_url}?st_dt=&mode=detail&page={page}&sort=list_order,asc"
+    html_text = requests.get(url).text
 
-for page in range(1,11):
-    url = f"{base_url}?page={page}"
-    html_text = requests.get("https://www.imdb.com/list/ls006266261/").text
     # print(html_text)
 
     soup = BeautifulSoup(html_text, 'lxml')
@@ -17,7 +17,8 @@ for page in range(1,11):
        title = movie.find('a').text.strip()
        year = movie.find('span', class_="lister-item-year text-muted unbold").text.strip().replace('(', '').replace(')', '')     #remove ngoặc ở (1972)
        runtime= movie.find('span',class_="runtime" ).text.strip()
-       genre= movie.find('span',class_="genre" ).text.strip()
+       genre_element = movie.find('span', class_="genre")
+       genre = genre_element.text.strip() if genre_element else 'N/A'
        rating_star= movie.find('span', class_="ipl-rating-star__rating").text.strip()
        meta_score = soup.find('span', class_='metascore').text.strip() if soup.find('span', class_='metascore') else 'N/A'
        votes = movie.find('span', {'name':'nv'})['data-value']
@@ -37,13 +38,18 @@ for page in range(1,11):
            "Gross": gross}
        movie_data_list.append(movie_data)
 
+    # Print data for the first movie on each page
+    if movie_data_list:
+        print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
+    else:
+        print(f"Page {page}, No movies found.")
 # # Checking 10 first films: 
-#     for movie in movie_data_list[:200]:
-#         print(movie)
+# for movie in movie_data_list[101:150]:
+#     print(movie)
 
 # Save as CSV files: 
 import csv
-csv_file_path = 'movie_dataset.csv'
+csv_file_path = 'movies_dataset.csv'
 fieldnames = movie_data_list[0].keys()     # Because it's in dict   => have to take dict key
 with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -52,9 +58,9 @@ with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
 
 print(f"Movie data saved to {csv_file_path}")
 
-# Check the location:  
-import os 
-absolute_path = os.path.abspath('movie_dataset.csv')
+# # Check the location:  
+# import os 
+# absolute_path = os.path.abspath('movie_dataset.csv')
 
 
 # print(movie)
