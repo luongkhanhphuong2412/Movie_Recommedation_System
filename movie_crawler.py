@@ -24,8 +24,17 @@ for page in range(1, 11):
        rating_star= movie.find('span', class_="ipl-rating-star__rating").text.strip()
        meta_score = soup.find('span', class_='metascore').text.strip() if soup.find('span', class_='metascore') else 'N/A'
        votes = movie.find('span', {'name':'nv'})['data-value']
-       gross_element = movie.find('span', {'name': 'nv'})
-       gross= gross_element['data-value'].replace('.', '').replace('$', '').replace('M', '') if gross_element and 'data-value' in gross_element.attrs else 'N/A'
+
+       # Find the span tag containing gross data
+       gross_span = movie.find('span', {'class': 'text-muted'}, string='Gross:')
+
+# Check if the gross span exists and has a data-value attribute
+       if gross_span:
+             next_span = gross_span.find_next_sibling('span', {'name': 'nv'})
+             gross_data = next_span['data-value'].replace('.', '') if next_span and 'data-value' in next_span.attrs else 'N/A'
+       else:
+             gross_data = 'N/A'
+
 
 
 
@@ -37,27 +46,27 @@ for page in range(1, 11):
            "Rating": rating_star,
            "Metascore": meta_score,
            "Votes": votes,
-           "Gross": gross}
+           "Gross": gross_data}
        
        movie_data_list.append(movie_data)
 
 # # Check the quantity of film in movie data list: 
 # actual_count= len(movie_data_list)
 # print(actual_count)
-    # # Print data for the first movie on each page
+    # Print data for the first movie on each page
     # if movie_data_list:
     #     print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
     # else:
     #     print(f"Page {page}, No movies found.")
 
 
-# # Checking films: 
-# for movie in movie_data_list[101:150]:
+# Checking films: 
+# for movie in movie_data_list[:10]:
 #     print(movie)
 
 # Save as CSV files: 
 import csv
-csv_file_path = 'movies_dataset.csv'
+csv_file_path = 'movie_dataset.csv'
 fieldnames = movie_data_list[0].keys()     # Because it's in dict   => have to take dict key
 with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)

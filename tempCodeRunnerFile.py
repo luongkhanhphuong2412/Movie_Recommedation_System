@@ -25,7 +25,9 @@ for page in range(1, 11):
        meta_score = soup.find('span', class_='metascore').text.strip() if soup.find('span', class_='metascore') else 'N/A'
        votes = movie.find('span', {'name':'nv'})['data-value']
        gross_element = movie.find('span', {'name': 'nv'})
-       gross= gross_element['data-value'].replace('.', '').replace('$', '').replace('M', '') if gross_element and 'data-value' in gross_element.attrs else 'N/A'
+    #    gross= gross_element['data-value'].replace('.', '').replace('$', '').replace('M', '') if gross_element and 'data-value' in gross_element.attrs else 'N/A'
+       gross_value = gross_element['data-value'].replace('.', '').replace('$', '').replace('M', '')
+       print(f"${gross_value}M")
 
 
 
@@ -44,11 +46,11 @@ for page in range(1, 11):
 # # Check the quantity of film in movie data list: 
 # actual_count= len(movie_data_list)
 # print(actual_count)
-    # # Print data for the first movie on each page
-    # if movie_data_list:
-    #     print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
-    # else:
-    #     print(f"Page {page}, No movies found.")
+    # Print data for the first movie on each page
+    if movie_data_list:
+        print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
+    else:
+        print(f"Page {page}, No movies found.")
 
 
 # # Checking films: 
@@ -56,12 +58,28 @@ for page in range(1, 11):
 #     print(movie)
 
 # Save as CSV files: 
-import csv
-csv_file_path = 'movies_dataset.csv'
-fieldnames = movie_data_list[0].keys()     # Because it's in dict   => have to take dict key
-with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()     #writes the header row to the CSV file
-    writer.writerows(movie_data_list)    #This line writes the data rows to the CSV file. The movie_data_list is a list of dictionaries, and each dictionary represents a row of data. The writerows method writes all the rows in one go.
+# import csv
+# csv_file_path = 'movies_dataset.csv'
+# fieldnames = movie_data_list[0].keys()     # Because it's in dict   => have to take dict key
+# with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#     writer.writeheader()     #writes the header row to the CSV file
+#     writer.writerows(movie_data_list)    #This line writes the data rows to the CSV file. The movie_data_list is a list of dictionaries, and each dictionary represents a row of data. The writerows method writes all the rows in one go.
 
-print(f"Movie data saved to {csv_file_path}")
+# print(f"Movie data saved to {csv_file_path}")
+
+# # Check the location:  
+# import os 
+# absolute_path = os.path.abspath('movie_dataset.csv')
+
+
+# print(movie)
+
+# # movie = soup.find('h3', class_= "lister-item-header")  
+# # print(movie)
+# # Print movie name and year: 
+# # movie_names= movie.find('a').text
+# # print(movie_names)
+
+# # year= movie.find('span', class_="lister-item-year text-muted unbold").text
+# # print(year)
