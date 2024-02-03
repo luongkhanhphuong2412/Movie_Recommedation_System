@@ -43,7 +43,7 @@ for page in range(1, 11):
         print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
     else:
         print(f"Page {page}, No movies found.")
-# # Checking 10 first films: 
+# # Checking films: 
 # for movie in movie_data_list[101:150]:
 #     print(movie)
 
