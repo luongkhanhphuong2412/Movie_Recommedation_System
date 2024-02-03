@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 base_url = "https://www.imdb.com/list/ls048276758/"
 
+movie_data_list = []
+
 for page in range(1, 11):
     url = f"{base_url}?st_dt=&mode=detail&page={page}&sort=list_order,asc"
     html_text = requests.get(url).text
@@ -12,7 +14,7 @@ for page in range(1, 11):
     movies = soup.find_all('div', class_= "lister-item-content")
 # print(movie)
     # Movie title: 
-    movie_data_list = []
+
     for movie in movies:
        title = movie.find('a').text.strip()
        year = movie.find('span', class_="lister-item-year text-muted unbold").text.strip().replace('(', '').replace(')', '')     #remove ngoặc ở (1972)
@@ -36,13 +38,19 @@ for page in range(1, 11):
            "Metascore": meta_score,
            "Votes": votes,
            "Gross": gross}
+       
        movie_data_list.append(movie_data)
 
-    # Print data for the first movie on each page
-    if movie_data_list:
-        print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
-    else:
-        print(f"Page {page}, No movies found.")
+# # Check the quantity of film in movie data list: 
+# actual_count= len(movie_data_list)
+# print(actual_count)
+    # # Print data for the first movie on each page
+    # if movie_data_list:
+    #     print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
+    # else:
+    #     print(f"Page {page}, No movies found.")
+
+
 # # Checking films: 
 # for movie in movie_data_list[101:150]:
 #     print(movie)
