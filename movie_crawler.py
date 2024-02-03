@@ -30,10 +30,10 @@ for page in range(1, 11):
 
 # Check if the gross span exists and has a data-value attribute
        if gross_span:
-             next_span = gross_span.find_next_sibling('span', {'name': 'nv'})
-             gross_data = next_span['data-value'].replace('.', '') if next_span and 'data-value' in next_span.attrs else 'N/A'
+            next_span = gross_span.find_next_sibling('span', {'name': 'nv'})
+            gross_data = next_span['data-value'].replace('.', '') if next_span and 'data-value' in next_span.attrs else 'N/A'
        else:
-             gross_data = 'N/A'
+            gross_data = 'N/A'
 
 
 
@@ -61,19 +61,19 @@ for page in range(1, 11):
 
 
 # Checking films: 
-# for movie in movie_data_list[:10]:
-#     print(movie)
+for movie in movie_data_list[:10]:
+    print(movie)
 
 # Save as CSV files: 
-import csv
-csv_file_path = 'movie_dataset.csv'
-fieldnames = movie_data_list[0].keys()     # Because it's in dict   => have to take dict key
-with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()     #writes the header row to the CSV file
-    writer.writerows(movie_data_list)    #This line writes the data rows to the CSV file. The movie_data_list is a list of dictionaries, and each dictionary represents a row of data. The writerows method writes all the rows in one go.
+# import csv
+# csv_file_path = 'movie_dataset.csv'
+# fieldnames = movie_data_list[0].keys()     # Because it's in dict   => have to take dict key
+# with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#     writer.writeheader()     #writes the header row to the CSV file
+#     writer.writerows(movie_data_list)    #This line writes the data rows to the CSV file. The movie_data_list is a list of dictionaries, and each dictionary represents a row of data. The writerows method writes all the rows in one go.
 
-print(f"Movie data saved to {csv_file_path}")
+# print(f"Movie data saved to {csv_file_path}")
 
 # # Check the location:  
 # import os 
