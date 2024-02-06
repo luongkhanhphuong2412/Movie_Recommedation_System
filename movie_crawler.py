@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 base_url = "https://www.imdb.com/list/ls048276758/"
-
+# Kapi ngáo đét
 movie_data_list = []
 
 for page in range(1, 11):
@@ -53,11 +53,11 @@ for page in range(1, 11):
 # # Check the quantity of film in movie data list: 
 # actual_count= len(movie_data_list)
 # print(actual_count)
-    # Print data for the first movie on each page
-    # if movie_data_list:
-    #     print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
-    # else:
-    #     print(f"Page {page}, No movies found.")
+#     Print data for the first movie on each page
+#     if movie_data_list:
+#         print(f"Page {page}, First Movie: {movie_data_list[0]}")      # Using f-string to format the string
+#     else:
+#         print(f"Page {page}, No movies found.")
 
 
 # Checking films: 
